@@ -422,6 +422,7 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
+  // Reduced rendering by placing horid repeating querySelectorAll() inside determineDx(), with getElementsByClassName() 
   function changePizzaSizes(size) {
     switch(size) {
       case "1":
