@@ -2,9 +2,26 @@
 
 Visit - http://timclifford.github.io/frontend-nanodegree-mobile-portfolio-optimisation/
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+## Overall Changes	
+	inlined/minified CSS for initial page load. Also inlined CSS in separate files.
 
-To get started, check out the repository, inspect the code,
+	Moved Google Fonts link at the top and placed inside inlined CSS.
+
+	moved third party Google Analytics js to end of body and added async to loaded aschronously.
+
+	reduced image sizes
+		- in particular the pizzeria.jpg
+
+	minified perfmatters.js
+
+	minified bootstrap-grid.css and style.css 
+
+	minified html pages
+
+## Scripting changes
+	main.js
+	- Line 425 - Reduced Rendering - Replaced horid  repeating querySelectorAll() inside determineDx(), with getElementsByClassName() that runs outside of the loop.
+	- Line 501 - Stored scrollTop styling calculation inside a variable outside the loop.
 
 ### Getting started
 
