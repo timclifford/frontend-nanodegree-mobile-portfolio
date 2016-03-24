@@ -57,8 +57,9 @@
     </div>
 
     <footer>
-      <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
+      <p>&copy; Web Performance 2016 <span id="crp-stats"></span></p>
     </footer>
+    <!-- Moved Google Analytics to footer asynchronously to improve page hang ups and not have to relay on third party resources.  -->
     <script>
       (function(w,g){w['GoogleAnalyticsObject']=g;
       w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
