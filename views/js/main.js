@@ -435,15 +435,15 @@ var resizePizzas = function(size) {
         newWidth = 50;
         break;
       default:
-        console.log("bug in sizeSwitcher");
-    };
+        console.log("Can't load switcher");
+    }
 
     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
 
     for (var i = 0; i < randomPizzas.length; i++){
       randomPizzas[i].style.width = newWidth + "%";
-    };
-  };
+    }
+  }
 
   changePizzaSizes(size);
 
@@ -451,13 +451,22 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_end_resize");
   window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
-  console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
+  console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
 };
 
 window.performance.mark("mark_start_generating"); // collect timing data
 
+//Calculate number of pizzas based on window height and widths rather than randomly 100.
+var generateNumber = function(){
+  var h = window.innerHeight;
+  var w = window.innerWidth;
+  var numPizzas = h/100 * w/73.33;
+  return numPizzas;
+};
+
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
+var pizzaNumber = generateNumber();
+for (var i = 2; i < pizzaNumber; i++) {
   var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
@@ -491,13 +500,13 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   //Store scrollTop styling calculation inside a variable outside the loop.
-  var scrollTop = document.body.scrollTop/1250;
+  var scrollTop = document.body.scrollTop / 1250;
   var items = document.getElementsByClassName('mover');
+  var phase = [];
   for (var i = 0; i < items.length; i++) {
-      var phase = Math.sin(scrollTop + i % 5);
-      items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-
-  };
+      phase.push(Math.sin(scrollTop + i % 5));
+      items[i].style.left = items[i].basicLeft + 100 * (Math.sin(scrollTop + i % 5)) + 'px';
+  }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -516,7 +525,8 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // Load number of pizza's based on screen resolution used in generateNumber(). Then replace 200 with this dynamic calculation.
+  for (var i = 0; i < pizzaNumber; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
